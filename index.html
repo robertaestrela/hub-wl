@@ -56,11 +56,6 @@ kbd{display:inline-grid;place-items:center;height:20px;padding:0 6px;border-radi
 .ni.rec{height:32px;color:var(--muted);font-size:13px}
 .ni.rec img{width:16px;height:16px;object-fit:contain}
 .side-f{margin-top:auto;display:flex;flex-direction:column;gap:8px}
-.me{display:flex;align-items:center;gap:12px;padding:8px;border-radius:var(--r-m);background:var(--card)}
-.av{position:relative;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#2e2e33;font:600 12px/1 var(--f)}
-.av::after{content:"";position:absolute;right:-1px;bottom:-1px;width:10px;height:10px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 2px var(--card)}
-.me b{display:block;font:500 14px/18px var(--f)}
-.me small{display:block;font:400 12px/16px var(--f);color:var(--subtle)}
 
 .main{min-width:0;padding:40px 32px 64px}
 .top{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
@@ -233,7 +228,6 @@ h1{margin-top:4px;font:600 32px/40px var(--f);letter-spacing:-.03em}
       </nav>
       <div class="side-f">
         <a class="ni" href="https://github.com/robertaestrela?tab=repositories" target="_blank" rel="noopener"><svg class="i"><use href="#i-git"/></svg><span>GitHub</span><svg class="i"><use href="#i-ext"/></svg></a>
-        <div class="me"><span class="av">RL</span><div><b>Roberta Lima</b><small>Product Design · Sirius</small></div></div>
       </div>
     </div>
   </aside>
@@ -242,7 +236,7 @@ h1{margin-top:4px;font:600 32px/40px var(--f);letter-spacing:-.03em}
     <div class="top">
       <div>
         <p class="date" id="date"></p>
-        <h1 id="hello">Olá, Roberta</h1>
+        <h1 id="hello">Olá</h1>
         <p class="subt" id="subt"></p>
       </div>
       <div class="seg" id="viewSeg" role="tablist" aria-label="Visualização">
@@ -314,7 +308,7 @@ const live = {};   // caminho → 'ok' | 'bad'
 
 /* ===== Saudação e data ===== */
 const now = new Date(), h = now.getHours();
-$('#hello').textContent = (h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite') + ', Roberta';
+$('#hello').textContent = h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite';
 const d = now.toLocaleDateString('pt-BR', {weekday: 'long', day: 'numeric', month: 'long'});
 $('#date').textContent = d.charAt(0).toUpperCase() + d.slice(1);
 const nDecks = BRANDS.reduce((t, b) => t + (b.deck ? 1 : 0) + (b.extra || []).length, 0), nApps = BRANDS.length;
