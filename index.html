@@ -65,8 +65,8 @@ kbd{display:inline-grid;place-items:center;height:20px;padding:0 6px;border-radi
 .ni em{font:500 12px/20px var(--f);font-style:normal;color:var(--subtle)}
 .side-f{margin-top:auto}
 
-/* ===== Conteúdo: preenche o espaço, com 24px de limite nas laterais ===== */
-.main{display:flex;flex-direction:column;flex:1;min-width:0;height:100%;overflow:hidden}
+/* ===== Conteúdo: preenche o espaço, com 24px de limite nas laterais; é ele que rola (a barra lateral não) ===== */
+.main{display:flex;flex-direction:column;flex:1;min-width:0;height:100%;overflow:hidden auto;overscroll-behavior:contain}
 .head{flex:none;padding:28px 24px 0}
 .date{font:400 13px/18px var(--f);color:var(--muted)}
 h1{margin-top:4px;font:600 32px/40px var(--f);letter-spacing:-.03em}
@@ -106,8 +106,8 @@ a.hc:hover{background:var(--card);box-shadow:inset 0 0 0 1px #ffffff24}
 .hl-wrap::after{right:0;background:linear-gradient(270deg,var(--bg),transparent)}
 .hl-wrap.l::before,.hl-wrap.r::after{opacity:1}
 
-/* marcas: ocupam o resto da altura e rolam por dentro */
-.brands{flex:1;min-height:0;overflow:hidden auto;padding:0 24px 24px}
+/* marcas: seguem o fluxo; o conteúdo inteiro rola junto, e a barra lateral fica parada */
+.brands{flex:none;padding:0 24px 24px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:12px}
 .bc{min-width:0;display:flex;flex-direction:column;gap:16px;padding:16px;border-radius:16px;background:var(--panel);box-shadow:inset 0 0 0 1px var(--line);transition:box-shadow .25s}
 .bc:hover{box-shadow:inset 0 0 0 1px #ffffff2e}
