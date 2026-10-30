@@ -19,24 +19,24 @@
   --ease:cubic-bezier(.22,1,.36,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{overflow-x:clip;scrollbar-width:none}
-html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
-body{font:400 14px/20px var(--f);color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:clip}
+html,body{height:100%}
+body{overflow:hidden;font:400 14px/20px var(--f);color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 button,input{font:inherit;color:inherit;background:none;border:0}
 button{cursor:pointer}
 img,svg{display:block}
 svg.i{width:16px;height:16px;flex:none}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:12px}
+/* nenhuma barra de rolagem aparece; as áreas internas rolam sozinhas */
+*{scrollbar-width:none}
+*::-webkit-scrollbar{display:none}
 
-/* ===== Barra lateral recolhível (como a Nexus: recolhida vira um trilho de ícones e abre por cima no hover) ===== */
-.app{--sw:240px;min-height:100vh;min-height:100dvh}
-.app.mini{--sw:72px}
-.side{position:fixed;top:0;left:0;z-index:20;width:var(--sw);height:100vh;height:100dvh;padding:8px;transition:width .35s var(--ease)}
-.side-in{display:flex;flex-direction:column;width:100%;height:100%;padding:16px 8px 8px;border-radius:16px;background:var(--panel);box-shadow:inset 0 0 0 1px var(--line-2);overflow:hidden auto;scrollbar-width:none;transition:width .35s var(--ease),box-shadow .3s}
-.side-in::-webkit-scrollbar{display:none}
-.mini .side-in{width:56px}
-.mini .side:is(:hover,.peek) .side-in{width:224px;box-shadow:inset 0 0 0 1px var(--line),0 24px 64px #000000b3}
+/* ===== Casca do app (como a Nexus): tela inteira, barra lateral + conteúdo; só as áreas internas rolam ===== */
+.app{--sw:248px;display:flex;gap:8px;width:100%;height:100vh;height:100dvh;padding:8px;overflow:hidden}
+.app.mini{--sw:56px}
+.side{position:relative;z-index:20;flex:none;width:var(--sw);height:100%;transition:width .35s var(--ease)}
+.side-in{position:absolute;top:0;left:0;bottom:0;display:flex;flex-direction:column;width:100%;padding:16px 8px 8px;border-radius:16px;background:var(--panel);box-shadow:inset 0 0 0 1px var(--line-2);overflow:hidden auto;transition:width .35s var(--ease),box-shadow .3s}
+.mini .side:is(:hover,.peek) .side-in{width:232px;box-shadow:inset 0 0 0 1px var(--line),0 24px 64px #000000b3}
 .mini .side:not(:hover):not(.peek) :is(.logo b,.tog,.search input,.search kbd,.ni span,.ni em,.ni .ext){display:none}
 .top-row{display:flex;align-items:center;gap:4px;padding-bottom:24px}
 .logo{flex:1;min-width:0;display:flex;align-items:center;gap:12px;padding-left:4px}
@@ -55,7 +55,7 @@ svg.i{width:16px;height:16px;flex:none}
 .search input::placeholder{color:var(--subtle)}
 .search input::-webkit-search-cancel-button{display:none}
 .search:focus-within{box-shadow:inset 0 0 0 1px var(--accent)}
-kbd{display:inline-grid;place-items:center;height:20px;padding:0 6px;border-radius:5px;background:#ffffff14;color:var(--muted);font:500 11px/1 var(--f)}
+kbd{display:inline-grid;place-items:center;height:20px;padding:0 6px;border-radius:6px;background:#ffffff14;color:var(--muted);font:500 11px/1 var(--f)}
 .filters{display:flex;flex-direction:column;gap:2px}
 .ni{display:flex;align-items:center;gap:12px;width:100%;height:36px;padding:0 12px;border-radius:12px;color:var(--muted);text-align:left;white-space:nowrap;transition:background .2s,color .2s}
 .ni:hover{background:var(--hover);color:var(--text)}
@@ -65,55 +65,83 @@ kbd{display:inline-grid;place-items:center;height:20px;padding:0 6px;border-radi
 .ni em{font:500 12px/20px var(--f);font-style:normal;color:var(--subtle)}
 .side-f{margin-top:auto}
 
-.main{min-width:0;margin-left:var(--sw);padding:40px 32px 64px;transition:margin-left .35s var(--ease)}
+/* ===== Conteúdo: preenche o espaço, com 24px de limite nas laterais ===== */
+.main{display:flex;flex-direction:column;flex:1;min-width:0;height:100%;overflow:hidden}
+.head{flex:none;padding:28px 24px 0}
 .date{font:400 13px/18px var(--f);color:var(--muted)}
 h1{margin-top:4px;font:600 32px/40px var(--f);letter-spacing:-.03em}
 .subt{margin-top:4px;font:400 15px/20px var(--f);color:var(--muted)}
-.h2{margin:32px 0 12px;font:600 15px/20px var(--f);color:var(--muted)}
-.hl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.hc{min-width:0;display:flex;align-items:center;gap:12px;padding:12px;border-radius:16px;background:var(--panel);box-shadow:inset 0 0 0 1px var(--line);transition:background .2s,box-shadow .2s}
+/* card fixado no topo (a landing page de vendas da Sirius Games) */
+.pin{flex:none;display:flex;align-items:center;gap:16px;margin:20px 24px 0;padding:16px;border-radius:16px;background:linear-gradient(90deg,#0059ff2e,#0059ff0a 60%,transparent),var(--panel);box-shadow:inset 0 0 0 1px #0059ff59}
+.pin .lg{width:48px;height:48px;background:#fff;box-shadow:none}
+.pin .lg img{width:26px;height:26px}
+.pin .tx{flex:1;min-width:0}
+.pin .k{display:inline-flex;align-items:center;gap:4px;margin-bottom:4px;color:#87b5ff;font:500 12px/16px var(--f)}
+.pin .k svg{width:12px;height:12px}
+.pin b{display:block;font:600 17px/24px var(--f);letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pin small{display:block;font:400 13px/18px var(--f);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pin .acts{flex:none}
+.sec-h{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;height:32px;margin:24px 24px 8px}
+.sec-h h2{font:600 15px/20px var(--f);color:var(--muted)}
+.arrows{display:flex;gap:4px}
+.arrows button{display:grid;place-items:center;width:32px;height:32px;border-radius:12px;color:var(--muted);box-shadow:inset 0 0 0 1px var(--line);transition:background .2s,color .2s,opacity .2s}
+.arrows button:hover{background:var(--hover);color:var(--text)}
+.arrows button:disabled{opacity:.3;pointer-events:none}
+.arrows .nx svg{transform:rotate(180deg)}
+.arrows.off{display:none}
+
+/* destaques: uma faixa que preenche a largura; se não couber, rola por dentro */
+.hl-wrap{position:relative;flex:none;margin:0 24px}
+.hl{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain}
+.hc{flex:1 0 max(272px,calc((100% - 36px) / 4));min-width:0;display:flex;align-items:center;gap:12px;padding:12px;border-radius:16px;background:var(--panel);box-shadow:inset 0 0 0 1px var(--line);scroll-snap-align:start;transition:background .2s,box-shadow .2s}
 a.hc:hover{background:var(--card);box-shadow:inset 0 0 0 1px #ffffff24}
-.hc .lg{width:32px;height:32px;border-radius:12px}
+.hc .lg{width:32px;height:32px}
 .hc .lg img{width:18px;height:18px}
 .hc div{flex:1;min-width:0}
 .hc b{display:block;font:500 14px/20px var(--f);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hc small{display:block;font:400 12px/16px var(--f);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hc em{flex:none;font:400 12px/16px var(--f);font-style:normal;color:var(--subtle)}
+.hl-wrap::before,.hl-wrap::after{content:"";position:absolute;top:0;bottom:0;z-index:1;width:48px;pointer-events:none;opacity:0;transition:opacity .25s}
+.hl-wrap::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
+.hl-wrap::after{right:0;background:linear-gradient(270deg,var(--bg),transparent)}
+.hl-wrap.l::before,.hl-wrap.r::after{opacity:1}
 
-/* ===== Uma marca por card: logo, nome e os dois links ===== */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(296px,100%),1fr));gap:12px}
-.bc{min-width:0;display:flex;flex-direction:column;gap:16px;padding:16px;border-radius:16px;background:var(--panel);box-shadow:inset 0 0 0 1px var(--line);transition:box-shadow .25s,transform .35s var(--ease)}
-.bc:hover{box-shadow:inset 0 0 0 1px #ffffff2e;transform:translateY(-2px)}
-.bh{display:flex;align-items:center;gap:12px}
+/* marcas: ocupam o resto da altura e rolam por dentro */
+.brands{flex:1;min-height:0;overflow:hidden auto;padding:0 24px 24px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:12px}
+.bc{min-width:0;display:flex;flex-direction:column;gap:16px;padding:16px;border-radius:16px;background:var(--panel);box-shadow:inset 0 0 0 1px var(--line);transition:box-shadow .25s}
+.bc:hover{box-shadow:inset 0 0 0 1px #ffffff2e}
+.bh{display:flex;align-items:center;gap:12px;min-width:0}
 .lg{position:relative;display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:12px;background:var(--card);box-shadow:inset 0 0 0 1px var(--line-2)}
 .lg img{width:22px;height:22px;object-fit:contain}
 .lg i{position:absolute;right:-2px;bottom:-2px;width:10px;height:10px;border-radius:50%;background:var(--bad);box-shadow:0 0 0 2px var(--panel)}
 .bh b{flex:1;min-width:0;font:600 15px/20px var(--f);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tag{height:24px;padding:0 8px;border-radius:12px;background:#ffffff14;color:var(--muted);font:500 11px/24px var(--f);white-space:nowrap}
+.tag{flex:none;height:24px;padding:0 10px;border-radius:12px;background:#ffffff14;color:var(--muted);font:500 11px/24px var(--f);white-space:nowrap}
 .acts{display:flex;flex-wrap:wrap;gap:8px}
 /* link = pílula que abraça o texto, com o copiar dentro */
 .lk{display:inline-flex;align-items:center;height:36px;border-radius:12px;background:var(--card);box-shadow:inset 0 0 0 1px var(--line-2);transition:background .2s}
 .lk:hover{background:var(--hover)}
-.lk a{display:flex;align-items:center;gap:6px;height:100%;padding:0 10px 0 14px;font:500 13px/16px var(--f);white-space:nowrap}
-.lk a svg{width:12px;height:12px;opacity:.6}
-.lk .cp{display:grid;place-items:center;width:32px;height:100%;border-left:1px solid var(--line);border-radius:0 12px 12px 0;color:var(--subtle);transition:color .2s,background .2s}
+.lk a{display:flex;align-items:center;height:100%;padding:0 16px;font:500 13px/16px var(--f);white-space:nowrap}
+.lk .cp{display:grid;place-items:center;width:36px;height:100%;border-left:1px solid var(--line);border-radius:0 12px 12px 0;color:var(--subtle);transition:color .2s,background .2s}
 .lk .cp:hover{color:var(--text);background:#ffffff0f}
 .lk.pri{background:var(--accent);box-shadow:none}
 .lk.pri:hover{background:var(--accent-h)}
 .lk.pri a{color:#fff}
 .lk.pri .cp{border-color:#ffffff33;color:#ffffffb3}
 .lk.pri .cp:hover{color:#fff;background:#ffffff1a}
-.empty{margin-top:32px;padding:48px 16px;border-radius:16px;background:var(--panel);text-align:center;color:var(--muted)}
+.empty{padding:48px 16px;border-radius:16px;background:var(--panel);text-align:center;color:var(--muted)}
 .hide{display:none !important}
 
 .toast{position:fixed;left:50%;bottom:24px;z-index:50;display:flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:999px;background:#f4f4f5;color:#0e0e10;font:500 13px/16px var(--f);box-shadow:0 12px 32px #00000080;transform:translate(-50%,24px);opacity:0;transition:opacity .3s,transform .4s var(--ease);pointer-events:none}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 .toast svg{color:#16a34a}
 
+/* ===== Celular: a barra vira um menu no topo e a página rola normalmente ===== */
 @media (max-width:820px){
-  .side{position:sticky;width:auto;height:auto;padding:8px 8px 0}
-  .main,.mini .main{margin-left:0}
-  .side-in,.mini .side-in,.mini .side:is(:hover,.peek) .side-in{width:100%;height:auto;padding:12px;box-shadow:inset 0 0 0 1px var(--line-2)}
+  body{overflow:hidden auto}
+  .app,.app.mini{flex-direction:column;height:auto;min-height:100dvh;overflow:visible}
+  .side,.mini .side{position:sticky;top:8px;width:100%;height:auto}
+  .side-in,.mini .side-in,.mini .side:is(:hover,.peek) .side-in{position:relative;width:100%;padding:12px;box-shadow:inset 0 0 0 1px var(--line-2);overflow:visible}
   .mini .side:not(:hover):not(.peek) :is(.logo b,.tog,.search input,.search kbd,.ni span,.ni em){display:revert}
   .top-row{padding-bottom:0}
   .tog .chev{display:none}
@@ -121,15 +149,19 @@ a.hc:hover{background:var(--card);box-shadow:inset 0 0 0 1px #ffffff24}
   .m-body{display:none;padding-top:12px}
   .open .m-body{display:block}
   .search{margin-bottom:8px}
-  .filters{flex-direction:row;overflow-x:auto;scrollbar-width:none}
-  .filters::-webkit-scrollbar{display:none}
+  .filters{flex-direction:row;overflow-x:auto}
   .ni{width:auto;flex:none}
   .side-f{display:none}
-  .main{margin-left:0;padding:24px 16px 48px}
+  .main{height:auto;overflow:visible}
+  .head{padding:16px 8px 0}
+  .pin{flex-wrap:wrap;margin:16px 8px 0}
+  .pin .acts{width:100%}
   h1{font-size:28px;line-height:36px}
+  .sec-h{margin:24px 8px 8px}
+  .hl-wrap{margin:0 8px}
+  .hc{flex-basis:85%}
+  .brands{overflow:visible;padding:0 8px 24px}
 }
-@media (max-width:1600px){ .hl{grid-template-columns:repeat(2,minmax(0,1fr))} }
-@media (max-width:560px){ .hl{grid-template-columns:minmax(0,1fr)} }
 @media (prefers-reduced-motion:reduce){ *{transition:none !important} }
 </style>
 </head>
@@ -144,6 +176,7 @@ a.hc:hover{background:var(--card);box-shadow:inset 0 0 0 1px #ffffff24}
   <symbol id="i-star" viewBox="0 0 16 16"><path d="m8 2 1.8 3.7 4 .6-2.9 2.8.7 4L8 11.2 4.4 13.1l.7-4L2.2 6.3l4-.6z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
   <symbol id="i-chev" viewBox="0 0 16 16"><path d="M10 3.5 5.5 8l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-menu" viewBox="0 0 16 16"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 16 16"><path d="M9.5 2.5 13.5 6.5 11 7.5 8.5 10l.5 3.5-2-2L3.5 15M5 9 2.5 6.5 6 5.5l3.5-3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-git" viewBox="0 0 16 16"><path d="M8 1.5a6.5 6.5 0 0 0-2.06 12.67c.33.06.44-.14.44-.31v-1.1c-1.81.39-2.19-.87-2.19-.87-.3-.75-.72-.95-.72-.95-.59-.4.04-.4.04-.4.65.05 1 .67 1 .67.58 1 1.52.71 1.89.54.06-.42.23-.71.41-.87-1.45-.16-2.97-.72-2.97-3.22 0-.71.25-1.29.67-1.75-.07-.16-.29-.83.06-1.72 0 0 .55-.18 1.79.67a6.2 6.2 0 0 1 3.26 0c1.24-.85 1.79-.67 1.79-.67.35.89.13 1.56.06 1.72.42.46.67 1.04.67 1.75 0 2.5-1.52 3.06-2.98 3.22.24.2.45.6.45 1.21v1.79c0 .17.11.37.45.31A6.5 6.5 0 0 0 8 1.5z" fill="currentColor"/></symbol>
 </svg>
 
@@ -167,14 +200,19 @@ a.hc:hover{background:var(--card);box-shadow:inset 0 0 0 1px #ffffff24}
   </aside>
 
   <main class="main">
-    <p class="date" id="date"></p>
-    <h1 id="hello">Olá</h1>
-    <p class="subt" id="subt"></p>
-    <h2 class="h2">Destaques</h2>
-    <div class="hl" id="hl"></div>
-    <h2 class="h2">Marcas</h2>
-    <div class="grid" id="grid"></div>
-    <div class="empty hide" id="empty">Nenhuma marca com esse nome.</div>
+    <div class="head">
+      <p class="date" id="date"></p>
+      <h1 id="hello">Olá</h1>
+      <p class="subt">Apresentações e apps das white labels da Sirius Games</p>
+    </div>
+    <div class="pin" id="pin"></div>
+    <div class="sec-h"><h2>Destaques</h2><div class="arrows off" id="arrows"><button class="pv" aria-label="Destaques anteriores"><svg class="i"><use href="#i-chev"/></svg></button><button class="nx" aria-label="Próximos destaques"><svg class="i"><use href="#i-chev"/></svg></button></div></div>
+    <div class="hl-wrap" id="hlw"><div class="hl" id="hl"></div></div>
+    <div class="sec-h"><h2>Marcas</h2></div>
+    <div class="brands">
+      <div class="grid" id="grid"></div>
+      <div class="empty hide" id="empty">Nenhuma marca com esse nome.</div>
+    </div>
   </main>
 </div>
 
@@ -205,12 +243,14 @@ const BRANDS = [
   {k: 'estrelagames', name: 'EstrelaGames', deck: 'vip', deckLabel: 'Convite VIP', app: 'truco-mineiro-estrelagames', g: 'casa', more: ['Afiliados', 'afiliados']},
 ];
 
+/* ===== Fixado no topo (sempre o primeiro): a landing page geral de vendas da Sirius Games · link = caminho ou null enquanto não publica ===== */
+const PINNED = {k: 'sirius', t: 'Landing page de vendas · Sirius Games', s: 'A apresentação geral da Sirius Games para empresas', link: null};
+
 /* ===== Destaques do topo: o que mudou por último (troque aqui; link = caminho em robertaestrela.github.io, ou null) ===== */
 const HIGHLIGHTS = [
   {k: 'bateu', t: 'Bateu Games no ar', s: 'Apresentação e app', d: '30 out', link: 'bateu'},
   {k: 'brgames', t: '5 marcas novas', s: 'BR, VIP, Esportes da Sorte, Sorte nos Games e Esportiva', d: '30 out', link: 'brgames'},
   {k: 'sirius', t: 'Nova logo Sirius Games', s: 'Em todas as apresentações', d: '30 out', link: 'kingpanda'},
-  {k: 'sirius', t: 'Apresentação da Sirius Games', s: 'Base institucional em produção', d: 'Em breve', link: null},
 ];
 
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
@@ -223,12 +263,28 @@ const h = new Date().getHours();
 $('#hello').textContent = h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite';
 const d = new Date().toLocaleDateString('pt-BR', {weekday: 'long', day: 'numeric', month: 'long'});
 $('#date').textContent = d.charAt(0).toUpperCase() + d.slice(1);
-$('#subt').textContent = 'Apresentações e apps das white labels da Sirius Games';
 if (!/Mac|iPhone|iPad/.test(navigator.platform)) $('#kbd').textContent = 'Ctrl K';
-$('#hl').innerHTML = HIGHLIGHTS.map(x => `<${x.link ? `a href="${url(x.link)}" target="_blank" rel="noopener"` : 'div'} class="hc"><span class="lg"><img src="assets/logos/${x.k}.svg" alt=""></span><div><b>${x.t}</b><small>${x.s}</small></div><em>${x.d}</em></${x.link ? 'a' : 'div'}>`).join('');
 $$('[data-c]').forEach(e => { e.textContent = BRANDS.filter(b => e.dataset.c === 'all' || b.g === e.dataset.c).length; });
 
-const lk = (label, p, pri) => `<span class="lk${pri ? ' pri' : ''}"><a href="${url(p)}" target="_blank" rel="noopener">${label}<svg class="i"><use href="#i-ext"/></svg></a><button class="cp" data-copy="${url(p)}" aria-label="Copiar link: ${label}" title="Copiar link"><svg class="i"><use href="#i-copy"/></svg></button></span>`;
+/* ===== Destaques: faixa com rolagem interna, setas e degradê nas pontas só quando não cabe ===== */
+const hl = $('#hl'), hlw = $('#hlw'), arrows = $('#arrows');
+hl.innerHTML = HIGHLIGHTS.map(x => `<${x.link ? `a href="${url(x.link)}" target="_blank" rel="noopener"` : 'div'} class="hc"><span class="lg"><img src="assets/logos/${x.k}.svg" alt=""></span><div><b>${x.t}</b><small>${x.s}</small></div><em>${x.d}</em></${x.link ? 'a' : 'div'}>`).join('');
+function edges() {
+  const over = hl.scrollWidth > hl.clientWidth + 1, x = hl.scrollLeft, end = hl.scrollWidth - hl.clientWidth - 1;
+  arrows.classList.toggle('off', !over);
+  hlw.classList.toggle('l', over && x > 1); hlw.classList.toggle('r', over && x < end);
+  $('.arrows .pv').disabled = x <= 1; $('.arrows .nx').disabled = x >= end;
+}
+const step = () => (hl.firstElementChild ? hl.firstElementChild.getBoundingClientRect().width + 12 : 300);
+$('.arrows .pv').addEventListener('click', () => hl.scrollBy({left: -step(), behavior: 'smooth'}));
+$('.arrows .nx').addEventListener('click', () => hl.scrollBy({left: step(), behavior: 'smooth'}));
+hl.addEventListener('scroll', edges, {passive: true});
+new ResizeObserver(edges).observe(hl);
+
+/* ===== Marcas ===== */
+const lk = (label, p, pri) => `<span class="lk${pri ? ' pri' : ''}"><a href="${url(p)}" target="_blank" rel="noopener">${label}</a><button class="cp" data-copy="${url(p)}" aria-label="Copiar link: ${label}" title="Copiar link"><svg class="i"><use href="#i-copy"/></svg></button></span>`;
+$('#pin').innerHTML = `<span class="lg"><img src="assets/logos/${PINNED.k}.svg" alt=""></span><div class="tx"><span class="k"><svg class="i"><use href="#i-pin"/></svg>Fixado</span><b>${PINNED.t}</b><small>${PINNED.s}</small></div>`
+  + `<div class="acts">${PINNED.link ? lk('Abrir', PINNED.link, true) : '<span class="tag">Em breve</span>'}</div>`;
 function render() {
   const list = BRANDS.filter(b => (state.f === 'all' || b.g === state.f) && (!state.q || norm(b.name).includes(state.q)));
   $('#empty').classList.toggle('hide', list.length > 0);
@@ -238,11 +294,8 @@ function render() {
   </article>`).join('');
 }
 
-$$('#filters [data-f]').forEach(n => n.addEventListener('click', () => { $$('#filters [data-f]').forEach(x => x.classList.toggle('on', x === n)); state.f = n.dataset.f; render(); if (MOB.matches) { app.classList.remove('open'); setTog(); } }));
-const q = $('#q');
-q.addEventListener('input', () => { state.q = norm(q.value.trim()); render(); });
 /* ===== Barra lateral: no computador recolhe para um trilho de ícones (lembra a escolha); no celular abre e fecha como menu ===== */
-const app = $('#app'), side = $('#side'), tog = $('#tog'), MOB = matchMedia('(max-width:820px)');
+const app = $('#app'), side = $('#side'), tog = $('#tog'), q = $('#q'), MOB = matchMedia('(max-width:820px)');
 const setTog = () => { const open = MOB.matches ? app.classList.contains('open') : !app.classList.contains('mini'); tog.setAttribute('aria-expanded', open); tog.setAttribute('aria-label', MOB.matches ? (open ? 'Fechar menu' : 'Abrir menu') : (open ? 'Recolher menu' : 'Fixar menu aberto')); };
 try { if (localStorage.getItem('hub-mini') === '1') app.classList.add('mini'); } catch (e) {}
 tog.addEventListener('click', () => {
@@ -251,12 +304,18 @@ tog.addEventListener('click', () => {
   setTog();
 });
 MOB.addEventListener('change', setTog); setTog();
+$$('#filters [data-f]').forEach(n => n.addEventListener('click', () => {
+  $$('#filters [data-f]').forEach(x => x.classList.toggle('on', x === n)); state.f = n.dataset.f; render();
+  if (MOB.matches) { app.classList.remove('open'); setTog(); }
+}));
+q.addEventListener('input', () => { state.q = norm(q.value.trim()); render(); });
 q.addEventListener('blur', () => side.classList.remove('peek'));
 addEventListener('keydown', e => {
   if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); if (MOB.matches) { app.classList.add('open'); setTog(); } else side.classList.add('peek'); q.focus(); q.select(); }
   if (e.key === 'Escape' && document.activeElement === q) { q.value = ''; q.dispatchEvent(new Event('input')); q.blur(); }
 });
 
+/* ===== Copiar link ===== */
 let tt;
 document.addEventListener('click', async e => {
   const b = e.target.closest('[data-copy]'); if (!b) return;
@@ -264,7 +323,7 @@ document.addEventListener('click', async e => {
   const toast = $('#toast'); toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('show'), 1600);
 });
 
-render();
+render(); edges();
 // publicado no mesmo endereço, confere os links em silêncio: só a marca com link fora do ar ganha o pontinho vermelho
 if (location.hostname === 'robertaestrela.github.io') {
   BRANDS.forEach(b => [b.deck, b.app, b.more && b.more[1]].filter(Boolean).forEach(p =>
