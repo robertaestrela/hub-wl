@@ -8,20 +8,18 @@
 <link rel="icon" href="assets/logos/sirius.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 /* ===== Tokens · UI da Nexus (gestão estilo Apple) com o azul da Sirius Games ===== */
 :root{
-  --bg:#0e0e10; --panel:#161618; --card:#1c1c1f; --card-2:#232327; --hover:#26262b; --line:#ffffff14; --line-2:#ffffff0f;
+  --bg:#0e0e10; --panel:#161618; --card:#1c1c1f; --hover:#26262b; --line:#ffffff14; --line-2:#ffffff0f;
   --text:#f4f4f5; --muted:#a1a1aa; --subtle:#71717a;
-  --accent:#0059ff; --accent-h:#1f6bff; --accent-soft:#87b5ff; --accent-a:#0059ff29;
-  --ok:#22c55e; --ok-a:#22c55e1f; --warn:#f59e0b; --warn-a:#f59e0b1f; --bad:#ef4444; --bad-a:#ef44441f; --info:#60a5fa; --info-a:#60a5fa1f;
+  --accent:#0059ff; --accent-h:#1f6bff; --bad:#ef4444;
   --f:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
-  --r-s:8px; --r-m:12px; --r-l:16px; --ease:cubic-bezier(.22,1,.36,1);
+  --ease:cubic-bezier(.22,1,.36,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
-body{font:400 14px/20px var(--f);color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01"}
+body{font:400 14px/20px var(--f);color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 button,input{font:inherit;color:inherit;background:none;border:0}
 button{cursor:pointer}
@@ -29,358 +27,168 @@ img,svg{display:block}
 svg.i{width:16px;height:16px;flex:none}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
 
-/* ===== Estrutura: barra lateral + conteúdo ===== */
-.app{display:grid;grid-template-columns:256px 1fr;min-height:100vh}
+/* ===== Barra lateral + conteúdo ===== */
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
 .side{position:sticky;top:0;height:100vh;padding:8px}
-.side-in{display:flex;flex-direction:column;height:100%;padding:16px 8px 8px;border-radius:var(--r-l);background:var(--panel);box-shadow:inset 0 0 0 1px var(--line-2)}
+.side-in{display:flex;flex-direction:column;height:100%;padding:16px 8px 8px;border-radius:16px;background:var(--panel);box-shadow:inset 0 0 0 1px var(--line-2)}
 .logo{display:flex;align-items:center;gap:12px;padding:0 8px 24px}
-.logo .sq{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:#fff}
-.logo .sq img{width:20px;height:auto}
-.logo b{font:700 20px/24px var(--f);letter-spacing:-.03em}
-.logo b i{display:inline-block;width:6px;height:6px;margin:0 6px 3px;border-radius:50%;background:var(--accent);vertical-align:middle}
-.search{display:flex;align-items:center;gap:8px;height:36px;margin:0 0 16px;padding:0 8px 0 12px;border-radius:var(--r-s);background:var(--card);color:var(--subtle);box-shadow:inset 0 0 0 1px var(--line-2)}
-.search input{flex:1;min-width:0;outline:none;color:var(--text);font-size:14px}
+.logo .sq{display:grid;place-items:center;width:32px;height:32px;border-radius:9px;background:#fff}
+.logo .sq img{width:18px;height:auto}
+.logo b{font:600 18px/24px var(--f);letter-spacing:-.03em}
+.logo b i{display:inline-block;width:5px;height:5px;margin:0 6px 3px;border-radius:50%;background:var(--accent);vertical-align:middle}
+.search{display:flex;align-items:center;gap:8px;height:36px;margin-bottom:16px;padding:0 8px 0 12px;border-radius:8px;background:var(--card);color:var(--subtle);box-shadow:inset 0 0 0 1px var(--line-2)}
+.search input{flex:1;min-width:0;outline:none;color:var(--text)}
 .search input::placeholder{color:var(--subtle)}
 .search:focus-within{box-shadow:inset 0 0 0 1px var(--accent)}
 kbd{display:inline-grid;place-items:center;height:20px;padding:0 6px;border-radius:5px;background:#ffffff14;color:var(--muted);font:500 11px/1 var(--f)}
-.nav-l{display:flex;flex-direction:column;gap:2px}
-.nav-h{margin:16px 12px 4px;font:500 12px/16px var(--f);color:var(--subtle)}
-.ni{display:flex;align-items:center;gap:12px;width:100%;height:36px;padding:0 8px 0 12px;border-radius:var(--r-s);color:var(--text);text-align:left;transition:background .2s}
-.ni:hover{background:var(--hover)}
-.ni.on{background:var(--hover)}
-.ni.on svg{color:var(--accent-soft)}
-.ni span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ni svg{color:var(--muted)}
-.ni .ct{min-width:28px;height:20px;padding:0 6px;border-radius:999px;background:#ffffff14;color:var(--muted);font:500 12px/20px var(--f);text-align:center}
-.ni .ct.blue{background:var(--accent-a);color:var(--accent-soft)}
-.ni.rec{height:32px;color:var(--muted);font-size:13px}
-.ni.rec img{width:16px;height:16px;object-fit:contain}
-.side-f{margin-top:auto;display:flex;flex-direction:column;gap:8px}
+.filters{display:flex;flex-direction:column;gap:2px}
+.ni{display:flex;align-items:center;gap:12px;width:100%;height:36px;padding:0 8px 0 12px;border-radius:8px;color:var(--muted);text-align:left;transition:background .2s,color .2s}
+.ni:hover{background:var(--hover);color:var(--text)}
+.ni.on{background:var(--hover);color:var(--text)}
+.ni span{flex:1}
+.ni em{font:500 12px/20px var(--f);font-style:normal;color:var(--subtle)}
+.side-f{margin-top:auto}
 
 .main{min-width:0;padding:40px 32px 64px}
-.top{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
 .date{font:400 13px/18px var(--f);color:var(--muted)}
 h1{margin-top:4px;font:600 32px/40px var(--f);letter-spacing:-.03em}
 .subt{margin-top:4px;font:400 15px/20px var(--f);color:var(--muted)}
-.seg{display:flex;gap:2px;padding:3px;border-radius:10px;background:var(--card);box-shadow:inset 0 0 0 1px var(--line-2)}
-.seg button{display:flex;align-items:center;gap:8px;height:30px;padding:0 12px;border-radius:7px;color:var(--muted);font:500 13px/16px var(--f);transition:background .2s,color .2s}
-.seg button:hover{color:var(--text)}
-.seg button.on{background:var(--hover);color:var(--text);box-shadow:0 1px 2px #0000004d}
-.h2{display:flex;align-items:center;gap:8px;margin:32px 0 12px;font:600 17px/24px var(--f);letter-spacing:-.01em}
-.h2 small{display:flex;align-items:center;gap:6px;font:400 12px/16px var(--f);color:var(--subtle)}
-.h2 small::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--subtle)}
 
-/* números do topo */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:24px}
-.stat{padding:20px;border-radius:var(--r-l);background:var(--panel);box-shadow:inset 0 0 0 1px var(--line)}
-.stat p{font:400 14px/20px var(--f);color:var(--muted)}
-.stat b{display:flex;align-items:center;gap:8px;margin-top:8px;font:600 24px/32px var(--f);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.stat small{display:block;margin-top:4px;font:400 12px/16px var(--f);color:var(--subtle)}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--subtle)}
-.dot.ok{background:var(--ok);box-shadow:0 0 0 3px var(--ok-a)}
-.dot.bad{background:var(--bad);box-shadow:0 0 0 3px var(--bad-a)}
-
-/* destaques (como o "Precisa de atenção" da Nexus) */
-.hl{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.hc{display:flex;align-items:center;gap:12px;padding:12px 12px 12px 12px;border-radius:var(--r-m);background:var(--panel);box-shadow:inset 0 0 0 1px var(--line);transition:background .2s,box-shadow .2s}
-.hc:hover{background:var(--card);box-shadow:inset 0 0 0 1px #ffffff24}
-.hc .ic{display:grid;place-items:center;flex:none;width:32px;height:32px;border-radius:8px}
-.hc .ic img{width:18px;height:18px;object-fit:contain}
-.hc div{flex:1;min-width:0}
-.hc b{display:block;font:500 14px/20px var(--f);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hc small{display:block;font:400 12px/16px var(--f);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hc>svg{color:var(--subtle)}
-
-/* filtros */
-.bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:32px 0 12px}
-.bar .h2{margin:0 8px 0 0}
-.chipf{display:flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:999px;background:var(--card);box-shadow:inset 0 0 0 1px var(--line-2);color:var(--muted);font:500 13px/16px var(--f);transition:background .2s,color .2s}
-.chipf:hover{color:var(--text)}
-.chipf.on{background:var(--accent-a);color:var(--accent-soft);box-shadow:inset 0 0 0 1px #0059ff66}
-.bar .count{margin-left:auto;font:400 13px/16px var(--f);color:var(--subtle)}
-
-/* cards de marca (sub-cards da Nexus) */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(296px,1fr));gap:12px}
-.bc{display:flex;flex-direction:column;gap:16px;padding:16px;border-radius:var(--r-l);background:var(--panel);box-shadow:inset 0 0 0 1px var(--line);transition:box-shadow .25s,transform .35s var(--ease)}
+/* ===== Uma marca por card: logo, nome e os dois links ===== */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(264px,1fr));gap:12px;margin-top:32px}
+.bc{display:flex;flex-direction:column;gap:16px;padding:16px;border-radius:16px;background:var(--panel);box-shadow:inset 0 0 0 1px var(--line);transition:box-shadow .25s,transform .35s var(--ease)}
 .bc:hover{box-shadow:inset 0 0 0 1px #ffffff2e;transform:translateY(-2px)}
 .bh{display:flex;align-items:center;gap:12px}
-.lg{position:relative;display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:10px;background:var(--card-2);box-shadow:inset 0 0 0 1px var(--line-2)}
+.lg{position:relative;display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:10px;background:var(--card);box-shadow:inset 0 0 0 1px var(--line-2)}
 .lg img{width:22px;height:22px;object-fit:contain}
-.lg i{position:absolute;right:-2px;bottom:-2px;width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 0 2px var(--panel)}
-.bh div{flex:1;min-width:0}
-.bh b{display:block;font:600 15px/20px var(--f);letter-spacing:-.01em}
-.bh small{display:block;font:400 12px/16px var(--f);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.go{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;color:var(--subtle);transition:background .2s,color .2s}
-.go:hover{background:var(--hover);color:var(--text)}
-.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.meta p{font:400 12px/16px var(--f);color:var(--muted)}
-.meta b{display:flex;align-items:center;gap:6px;margin-top:4px;font:500 13px/18px var(--f);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.links{display:flex;flex-direction:column;gap:6px}
-.lk{display:flex;align-items:center;gap:8px;height:36px;padding:0 6px 0 12px;border-radius:var(--r-s);background:var(--card);transition:background .2s}
-.lk:hover{background:var(--hover)}
-.lk .k{flex:none;width:84px;font:400 12px/16px var(--f);color:var(--muted)}
-.lk a{flex:1;min-width:0;font:500 13px/18px var(--f);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lk a:hover{color:var(--accent-soft)}
-.lk.off a{color:var(--subtle);pointer-events:none}
-.ib{display:grid;place-items:center;flex:none;width:28px;height:28px;border-radius:6px;color:var(--subtle);transition:background .2s,color .2s}
-.ib:hover{background:#ffffff14;color:var(--text)}
-.acts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.btn{display:flex;align-items:center;justify-content:center;gap:6px;height:32px;border-radius:var(--r-s);background:var(--card-2);font:500 13px/16px var(--f);transition:background .2s,transform .2s}
+.lg i{position:absolute;right:-2px;bottom:-2px;width:10px;height:10px;border-radius:50%;background:var(--bad);box-shadow:0 0 0 2px var(--panel)}
+.bh b{flex:1;min-width:0;font:600 15px/20px var(--f);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tag{height:20px;padding:0 6px;border-radius:5px;background:#ffffff14;color:var(--muted);font:500 11px/20px var(--f);white-space:nowrap}
+.acts{display:flex;gap:4px}
+.btn{flex:1;display:flex;align-items:center;justify-content:center;min-width:0;height:32px;border-radius:8px;background:var(--card);font:500 13px/16px var(--f);transition:background .2s}
 .btn:hover{background:var(--hover)}
-.btn:active{transform:scale(.98)}
 .btn.pri{background:var(--accent);color:#fff}
 .btn.pri:hover{background:var(--accent-h)}
-.btn.dis{opacity:.4;pointer-events:none}
-
-/* pílulas de situação */
-.pl{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:6px;font:500 12px/16px var(--f);white-space:nowrap}
-.pl::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
-.pl.ok{background:var(--ok-a);color:#4ade80}
-.pl.bad{background:var(--bad-a);color:#f87171}
-.pl.warn{background:var(--warn-a);color:#fbbf24}
-.pl.info{background:var(--info-a);color:#93c5fd}
-.pl.idle{background:#ffffff0f;color:var(--muted)}
-
-/* lista (tabela da Nexus) */
-.tbl{border-radius:var(--r-l);background:var(--panel);box-shadow:inset 0 0 0 1px var(--line);overflow:hidden}
-.tr{display:grid;grid-template-columns:minmax(200px,1.4fr) minmax(160px,1.3fr) minmax(220px,1.6fr) minmax(220px,1.6fr) 96px 132px;align-items:center;gap:16px;min-height:60px;padding:8px 16px;border-top:1px solid var(--line-2)}
-.tr.th{min-height:44px;border-top:0;font:500 13px/16px var(--f);color:var(--muted)}
-.tr:not(.th):hover{background:#ffffff05}
-.tr .who{display:flex;align-items:center;gap:12px;min-width:0}
-.tr .who b{display:block;font:500 14px/18px var(--f)}
-.tr .who small{display:block;font:400 12px/16px var(--f);color:var(--subtle)}
-.tr .chars{font:400 13px/18px var(--f);color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.cell{display:flex;align-items:center;gap:4px;min-width:0}
-.cell a{min-width:0;font:500 13px/18px var(--f);color:var(--accent-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cell a:hover{text-decoration:underline}
-.cell .none{font:400 13px/18px var(--f);color:var(--subtle)}
-.tr .when{font:400 13px/18px var(--f);color:var(--muted);font-variant-numeric:tabular-nums}
-.empty{padding:48px 16px;border-radius:var(--r-l);background:var(--panel);box-shadow:inset 0 0 0 1px var(--line);text-align:center;color:var(--muted)}
+.btn.off{color:var(--subtle);pointer-events:none}
+.cp{display:grid;place-items:center;flex:none;width:32px;height:32px;border-radius:8px;color:var(--subtle);transition:background .2s,color .2s}
+.cp:hover{background:var(--hover);color:var(--text)}
+.empty{margin-top:32px;padding:48px 16px;border-radius:16px;background:var(--panel);text-align:center;color:var(--muted)}
 .hide{display:none !important}
 
-/* aviso de link copiado */
 .toast{position:fixed;left:50%;bottom:24px;z-index:50;display:flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:999px;background:#f4f4f5;color:#0e0e10;font:500 13px/16px var(--f);box-shadow:0 12px 32px #00000080;transform:translate(-50%,24px);opacity:0;transition:opacity .3s,transform .4s var(--ease);pointer-events:none}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 .toast svg{color:#16a34a}
 
-/* barra do celular */
-.mbar{display:none}
-
-@media (max-width:1280px){ .stats,.hl{grid-template-columns:repeat(2,1fr)} }
-@media (max-width:1100px){ .tr{grid-template-columns:minmax(180px,1.4fr) minmax(200px,1.6fr) minmax(200px,1.6fr) 120px} .tr .chars,.tr .when{display:none} }
-@media (max-width:900px){
+@media (max-width:820px){
   .app{grid-template-columns:1fr}
-  .side{position:fixed;inset:0 auto 0 0;z-index:40;width:288px;transform:translateX(-100%);transition:transform .35s var(--ease)}
-  .side.open{transform:none}
-  .scrim{position:fixed;inset:0;z-index:30;background:#00000099;opacity:0;pointer-events:none;transition:opacity .3s}
-  .scrim.show{opacity:1;pointer-events:auto}
-  .mbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;height:56px;padding:0 16px;background:#0e0e10e6;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--line-2)}
-  .mbar .logo{padding:0}
-  .mbar .logo .sq{width:28px;height:28px;border-radius:8px}
-  .mbar .logo .sq img{width:16px}
-  .mbar .logo b{font-size:17px}
+  .side{position:static;height:auto;padding:8px 8px 0}
+  .side-in{padding:12px}
+  .logo{padding:0 4px 12px}
+  .search{margin-bottom:8px}
+  .filters{flex-direction:row;overflow-x:auto}
+  .ni{width:auto;flex:none}
+  .side-f{display:none}
   .main{padding:24px 16px 48px}
-  .top{flex-direction:column;align-items:flex-start}
-  #viewSeg{display:none}
-  .tbl{display:none}
-  .grid.force{display:grid !important}
+  h1{font-size:28px;line-height:36px}
+  .grid{grid-template-columns:1fr;margin-top:24px}
 }
-@media (max-width:560px){ .hl{grid-template-columns:1fr} .stats{grid-template-columns:1fr 1fr;gap:8px} .stat{padding:16px} .stat small{display:none} h1{font-size:28px;line-height:36px} .grid{grid-template-columns:1fr} .bar .count{width:100%;margin-left:0} }
 @media (prefers-reduced-motion:reduce){ *{transition:none !important} }
 </style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="i-home" viewBox="0 0 16 16"><path d="M2.5 7 8 2.5 13.5 7v6a.5.5 0 0 1-.5.5h-3v-4H6v4H3a.5.5 0 0 1-.5-.5z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
-  <symbol id="i-deck" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 11v2.5M5.5 13.5h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
-  <symbol id="i-phone" viewBox="0 0 16 16"><rect x="4.5" y="1.5" width="7" height="13" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M7 12.5h2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
-  <symbol id="i-star" viewBox="0 0 16 16"><path d="m8 2 1.8 3.7 4 .6-2.9 2.8.7 4L8 11.2 4.4 13.1l.7-4L2.2 6.3l4-.6z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
   <symbol id="i-search" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="m10.5 10.5 3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
-  <symbol id="i-arrow" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-ext" viewBox="0 0 16 16"><path d="M6 3H3.5A.5.5 0 0 0 3 3.5v9a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V10M9 3h4v4M13 3 7.5 8.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-copy" viewBox="0 0 16 16"><rect x="5.5" y="5.5" width="8" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 3.5v-1a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h1" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
   <symbol id="i-check" viewBox="0 0 16 16"><path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
-  <symbol id="i-grid" viewBox="0 0 16 16"><rect x="2.5" y="2.5" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="2.5" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="2.5" y="9" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="9" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
-  <symbol id="i-list" viewBox="0 0 16 16"><path d="M5.5 4h8M5.5 8h8M5.5 12h8M2.5 4h.01M2.5 8h.01M2.5 12h.01" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
-  <symbol id="i-menu" viewBox="0 0 16 16"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
   <symbol id="i-git" viewBox="0 0 16 16"><path d="M8 1.5a6.5 6.5 0 0 0-2.06 12.67c.33.06.44-.14.44-.31v-1.1c-1.81.39-2.19-.87-2.19-.87-.3-.75-.72-.95-.72-.95-.59-.4.04-.4.04-.4.65.05 1 .67 1 .67.58 1 1.52.71 1.89.54.06-.42.23-.71.41-.87-1.45-.16-2.97-.72-2.97-3.22 0-.71.25-1.29.67-1.75-.07-.16-.29-.83.06-1.72 0 0 .55-.18 1.79.67a6.2 6.2 0 0 1 3.26 0c1.24-.85 1.79-.67 1.79-.67.35.89.13 1.56.06 1.72.42.46.67 1.04.67 1.75 0 2.5-1.52 3.06-2.98 3.22.24.2.45.6.45 1.21v1.79c0 .17.11.37.45.31A6.5 6.5 0 0 0 8 1.5z" fill="currentColor"/></symbol>
 </svg>
 
-<div class="mbar">
-  <a class="logo" href="#"><span class="sq"><img src="assets/logos/sirius.svg" alt=""></span><b>sirius<i></i>hub</b></a>
-  <button class="ib" id="menuBtn" aria-label="Abrir menu"><svg class="i"><use href="#i-menu"/></svg></button>
-</div>
-<div class="scrim" id="scrim"></div>
-
 <div class="app">
-  <aside class="side" id="side">
+  <aside class="side">
     <div class="side-in">
       <a class="logo" href="#" aria-label="Sirius Hub white label"><span class="sq"><img src="assets/logos/sirius.svg" alt=""></span><b>sirius<i></i>hub</b></a>
-      <label class="search"><svg class="i"><use href="#i-search"/></svg><input id="q" type="search" placeholder="Buscar" autocomplete="off" aria-label="Buscar marca, personagem ou link"><kbd id="kbd">⌘K</kbd></label>
-      <nav class="nav-l" id="filters" aria-label="Coleções">
-        <button class="ni on" data-f="all"><svg class="i"><use href="#i-home"/></svg><span>Início</span><em class="ct" data-c="all"></em></button>
-        <p class="nav-h">Coleções</p>
-        <button class="ni" data-f="wl"><svg class="i"><use href="#i-deck"/></svg><span>Marcas white label</span><em class="ct" data-c="wl"></em></button>
-        <button class="ni" data-f="casa"><svg class="i"><use href="#i-star"/></svg><span>Da casa</span><em class="ct" data-c="casa"></em></button>
-        <button class="ni" data-f="novas"><svg class="i"><use href="#i-phone"/></svg><span>Criadas hoje</span><em class="ct blue" data-c="novas"></em></button>
-        <p class="nav-h">Recentes</p>
-        <div id="recent" class="nav-l"></div>
+      <label class="search"><svg class="i"><use href="#i-search"/></svg><input id="q" type="search" placeholder="Buscar marca" autocomplete="off" aria-label="Buscar marca"><kbd id="kbd">⌘K</kbd></label>
+      <nav class="filters" id="filters" aria-label="Filtro">
+        <button class="ni on" data-f="all"><span>Todas</span><em data-c="all"></em></button>
+        <button class="ni" data-f="wl"><span>White label</span><em data-c="wl"></em></button>
+        <button class="ni" data-f="casa"><span>Da casa</span><em data-c="casa"></em></button>
       </nav>
-      <div class="side-f">
-        <a class="ni" href="https://github.com/robertaestrela?tab=repositories" target="_blank" rel="noopener"><svg class="i"><use href="#i-git"/></svg><span>GitHub</span><svg class="i"><use href="#i-ext"/></svg></a>
-      </div>
+      <div class="side-f"><a class="ni" href="https://github.com/robertaestrela?tab=repositories" target="_blank" rel="noopener"><svg class="i"><use href="#i-git"/></svg><span>GitHub</span><svg class="i"><use href="#i-ext"/></svg></a></div>
     </div>
   </aside>
 
   <main class="main">
-    <div class="top">
-      <div>
-        <p class="date" id="date"></p>
-        <h1 id="hello">Olá</h1>
-        <p class="subt" id="subt"></p>
-      </div>
-      <div class="seg" id="viewSeg" role="tablist" aria-label="Visualização">
-        <button class="on" data-v="cards" role="tab" aria-selected="true"><svg class="i"><use href="#i-grid"/></svg>Cards</button>
-        <button data-v="lista" role="tab" aria-selected="false"><svg class="i"><use href="#i-list"/></svg>Lista</button>
-      </div>
-    </div>
-
-    <div class="stats">
-      <div class="stat"><p>Marcas</p><b id="s-brands">0</b><small>parceiras + a casa</small></div>
-      <div class="stat"><p>Apresentações no ar</p><b id="s-decks">0</b><small>white label + EstrelaGames</small></div>
-      <div class="stat"><p>Apps no ar</p><b id="s-apps">0</b><small>protótipos navegáveis</small></div>
-      <div class="stat"><p>Links respondendo agora</p><b><span class="dot" id="s-dot"></span><span id="s-live">—</span></b><small id="s-live-sub">conferidos ao abrir a página</small></div>
-    </div>
-
-    <h2 class="h2">Destaques <small>o que mudou por último</small></h2>
-    <div class="hl" id="hl"></div>
-
-    <div class="bar">
-      <h2 class="h2">Links</h2>
-      <button class="chipf on" data-t="all">Tudo</button>
-      <button class="chipf" data-t="deck">Só apresentações</button>
-      <button class="chipf" data-t="app">Só apps</button>
-      <span class="count" id="count"></span>
-    </div>
-
+    <p class="date" id="date"></p>
+    <h1 id="hello">Olá</h1>
+    <p class="subt" id="subt"></p>
     <div class="grid" id="grid"></div>
-    <div class="tbl hide" id="tbl"></div>
-    <div class="empty hide" id="empty">Nenhuma marca encontrada para essa busca.</div>
+    <div class="empty hide" id="empty">Nenhuma marca com esse nome.</div>
   </main>
 </div>
 
 <div class="toast" id="toast"><svg class="i"><use href="#i-check"/></svg><span>Link copiado</span></div>
 
 <script>
-/* ===== Os links (fonte única: adicione uma marca nova aqui) =====
-   deck/app = caminho em robertaestrela.github.io · extra = outras páginas da marca · em = data de publicação */
+/* ===== Os links (fonte única: para uma marca nova, acrescente uma linha e a logo em assets/logos) =====
+   deck = apresentação · app = app da marca (caminhos em robertaestrela.github.io) · tag = aviso curto no card */
 const BASE = 'https://robertaestrela.github.io/';
 const BRANDS = [
-  {k: 'bateu', name: 'Bateu Games', c: '#cc0200', chars: 'Rei e Rainha do bar Bateu', deck: 'bateu', app: 'bateu-games', em: '2026-10-30', g: 'wl'},
-  {k: 'esportiva', name: 'Esportiva Games', c: '#ff6500', chars: 'Rei e Rainha do bar Esportiva', deck: 'esportiva', app: 'esportiva-games', em: '2026-10-30', g: 'wl'},
-  {k: 'sortenosgames', name: 'Sorte nos Games', c: '#6cab04', chars: 'Rei e Rainha do bar Sorte', deck: 'sortenosgames', app: 'sorte-nos-games', em: '2026-10-30', g: 'wl'},
-  {k: 'esportesdasorte', name: 'Esportes da Sorte', c: '#3be682', chars: 'Rei e Rainha do bar Esportes', deck: 'esportesdasorte', app: 'esportes-da-sorte-games', em: '2026-10-30', g: 'wl'},
-  {k: 'vipgames', name: 'VIP Games', c: '#eef111', chars: 'Rei e Rainha do bar VIP', deck: 'vipgames', app: 'vip-games', em: '2026-10-30', g: 'wl'},
-  {k: 'brgames', name: 'BR Games', c: '#00b201', chars: 'Rei e Rainha do bar BR', deck: 'brgames', app: 'br-games', em: '2026-10-30', g: 'wl'},
-  {k: 'mibrlos', name: 'Mibr.LOS', c: '#d0361d', chars: 'Sacy · Yulla', deck: 'mibrlos', app: 'mibrlos-games', em: '2026-10-28', g: 'wl'},
-  {k: 'claro', name: 'Claro', c: '#fe1e1e', chars: 'Clarinho', deck: 'claro', app: 'claro-games', em: '2026-10-28', g: 'wl'},
-  {k: 'liquid', name: 'Liquid', c: '#3bb0d4', chars: 'Rakin · Bárbara Passos', deck: 'liquid', app: 'liquid-games', em: '2026-10-28', g: 'wl', lang: 'EN'},
-  {k: 'caze', name: 'Caze Games', c: '#02a963', chars: 'Cazemiro · Chico Moedas', deck: 'caze', app: 'caze-games', em: '2026-10-28', g: 'wl'},
-  {k: 'loud', name: 'LOUD', c: '#11ff00', chars: 'Coringa · Carolina Voltman', deck: 'loud', app: 'loud-games', em: '2026-10-28', g: 'wl'},
-  {k: 'losgrandes', name: 'Los Grandes', c: '#fe5e00', chars: 'El Gato · La Luna', deck: 'losgrandes', app: 'los-grandes-games', em: '2026-10-28', g: 'wl'},
-  {k: 'jhon', name: 'Jon Vlogs', c: '#72edad', chars: 'Jon Vlogs', deck: 'jonvlogs', app: 'jon-games', em: '2026-10-28', g: 'wl'},
-  {k: 'krew', name: 'Krew', c: '#0056e6', chars: 'Nobru · Cerol · Paulinho o Loko', deck: 'krew', app: 'krew-games', em: '2026-10-28', g: 'wl'},
-  {k: 'furia', name: 'Furia Games', c: '#fadd3b', chars: 'Pantera gamer', deck: 'furia', app: 'furia-games', em: '2026-10-28', g: 'wl'},
-  {k: 'kingpanda', name: 'KingPanda Games', c: '#9f5cee', chars: 'Rei Panda', deck: 'kingpanda', app: 'kingpanda-games', em: '2026-10-28', g: 'wl'},
-  {k: 'sirius', name: 'Sirius Games', c: '#0059ff', chars: 'Rei e Rainha do bar Sirius', deck: null, deckNote: 'Institucional em produção', app: 'sirius-games', em: '2026-10-30', g: 'casa'},
-  {k: 'estrelagames', name: 'EstrelaGames', c: '#ffb000', chars: 'Magia do bar · Reis do baralho · Tripulação', deck: null, app: 'truco-mineiro-estrelagames', em: '2026-10-23', g: 'casa',
-   extra: [['Convite VIP', 'vip'], ['Afiliados', 'afiliados']]},
+  {k: 'bateu', name: 'Bateu Games', deck: 'bateu', app: 'bateu-games', g: 'wl'},
+  {k: 'esportiva', name: 'Esportiva Games', deck: 'esportiva', app: 'esportiva-games', g: 'wl'},
+  {k: 'sortenosgames', name: 'Sorte nos Games', deck: 'sortenosgames', app: 'sorte-nos-games', g: 'wl'},
+  {k: 'esportesdasorte', name: 'Esportes da Sorte', deck: 'esportesdasorte', app: 'esportes-da-sorte-games', g: 'wl'},
+  {k: 'vipgames', name: 'VIP Games', deck: 'vipgames', app: 'vip-games', g: 'wl'},
+  {k: 'brgames', name: 'BR Games', deck: 'brgames', app: 'br-games', g: 'wl'},
+  {k: 'mibrlos', name: 'Mibr.LOS', deck: 'mibrlos', app: 'mibrlos-games', g: 'wl'},
+  {k: 'claro', name: 'Claro', deck: 'claro', app: 'claro-games', g: 'wl'},
+  {k: 'liquid', name: 'Liquid', deck: 'liquid', app: 'liquid-games', g: 'wl', tag: 'EN'},
+  {k: 'caze', name: 'Caze Games', deck: 'caze', app: 'caze-games', g: 'wl'},
+  {k: 'loud', name: 'LOUD', deck: 'loud', app: 'loud-games', g: 'wl'},
+  {k: 'losgrandes', name: 'Los Grandes', deck: 'losgrandes', app: 'los-grandes-games', g: 'wl'},
+  {k: 'jhon', name: 'Jon Vlogs', deck: 'jonvlogs', app: 'jon-games', g: 'wl'},
+  {k: 'krew', name: 'Krew', deck: 'krew', app: 'krew-games', g: 'wl'},
+  {k: 'furia', name: 'Furia Games', deck: 'furia', app: 'furia-games', g: 'wl'},
+  {k: 'kingpanda', name: 'KingPanda Games', deck: 'kingpanda', app: 'kingpanda-games', g: 'wl'},
+  {k: 'sirius', name: 'Sirius Games', deck: null, app: 'sirius-games', g: 'casa', tag: 'Em breve'},
+  {k: 'estrelagames', name: 'EstrelaGames', deck: 'vip', deckLabel: 'Convite VIP', app: 'truco-mineiro-estrelagames', g: 'casa', more: ['Afiliados', 'afiliados']},
 ];
-const TODAY = '2026-10-30';
 
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const url = p => BASE + p + '/';
-const short = p => '/' + p;
-const dt = iso => new Date(iso + 'T12:00:00').toLocaleDateString('pt-BR', {day: 'numeric', month: 'short'}).replace('.', '');
-const links = b => [...(b.deck ? [['Apresentação', b.deck]] : []), ...(b.extra || []), ['App', b.app]];
-const state = {f: 'all', t: 'all', q: '', v: 'cards'};
-const live = {};   // caminho → 'ok' | 'bad'
+const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+const state = {f: 'all', q: ''};
+const bad = new Set();   // marcas com algum link fora do ar (só aparece um pontinho vermelho na logo)
 
-/* ===== Saudação e data ===== */
-const now = new Date(), h = now.getHours();
+const h = new Date().getHours();
 $('#hello').textContent = h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite';
-const d = now.toLocaleDateString('pt-BR', {weekday: 'long', day: 'numeric', month: 'long'});
+const d = new Date().toLocaleDateString('pt-BR', {weekday: 'long', day: 'numeric', month: 'long'});
 $('#date').textContent = d.charAt(0).toUpperCase() + d.slice(1);
-const nDecks = BRANDS.reduce((t, b) => t + (b.deck ? 1 : 0) + (b.extra || []).length, 0), nApps = BRANDS.length;
-$('#subt').textContent = `Todos os links das white labels da Sirius Games · ${BRANDS.length} marcas · ${nDecks + nApps} links`;
-$('#s-brands').textContent = BRANDS.length; $('#s-decks').textContent = nDecks; $('#s-apps').textContent = nApps;
+$('#subt').textContent = 'Apresentações e apps das white labels da Sirius Games';
 if (!/Mac|iPhone|iPad/.test(navigator.platform)) $('#kbd').textContent = 'Ctrl K';
+$$('[data-c]').forEach(e => { e.textContent = BRANDS.filter(b => e.dataset.c === 'all' || b.g === e.dataset.c).length; });
 
-/* ===== Destaques ===== */
-const by = k => BRANDS.find(b => b.k === k);
-const HL = [
-  {b: by('bateu'), t: 'Bateu Games no ar', s: 'Apresentação e app · a mais recente', href: url('bateu')},
-  {b: by('sirius'), t: 'Sirius Games · institucional', s: 'Base estilo kr3w em produção', href: url('sirius-games')},
-  {b: by('liquid'), t: 'Liquid em inglês', s: 'Única apresentação e app em EN', href: url('liquid')},
-  {b: by('estrelagames'), t: 'EstrelaGames · Convite VIP', s: 'Apresentação para jogadores', href: url('vip')},
-];
-$('#hl').innerHTML = HL.map(x => `<a class="hc" href="${x.href}" target="_blank" rel="noopener"><span class="ic" style="background:${x.b.c}1f"><img src="assets/logos/${x.b.k}.svg" alt=""></span><div><b>${x.t}</b><small>${x.s}</small></div><svg class="i"><use href="#i-arrow"/></svg></a>`).join('');
-
-/* ===== Recentes na barra lateral ===== */
-$('#recent').innerHTML = BRANDS.filter(b => b.deck).slice(0, 5).map(b => `<a class="ni rec" href="${url(b.deck)}" target="_blank" rel="noopener"><img src="assets/logos/${b.k}.svg" alt=""><span>${b.name}</span></a>`).join('');
-
-/* ===== Filtros ===== */
-const inGroup = b => state.f === 'all' || (state.f === 'novas' ? b.em === TODAY : b.g === state.f);
-const matches = b => !state.q || (b.name + ' ' + b.chars + ' ' + links(b).map(l => l[1]).join(' ')).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').includes(state.q);
-$$('[data-c]').forEach(e => { const f = e.dataset.c; e.textContent = BRANDS.filter(b => f === 'all' || (f === 'novas' ? b.em === TODAY : b.g === f)).length; });
-
-function card(b) {
-  const ls = links(b).filter(([k]) => state.t === 'all' || (state.t === 'app' ? k === 'App' : k !== 'App'));
-  const rows = ls.map(([k, p]) => `<div class="lk"><span class="k">${k}</span><a href="${url(p)}" target="_blank" rel="noopener" title="${url(p)}">${short(p)}</a><button class="ib" data-copy="${url(p)}" aria-label="Copiar link"><svg class="i"><use href="#i-copy"/></svg></button></div>`).join('')
-    + (b.deckNote && state.t !== 'app' ? `<div class="lk off"><span class="k">Apresentação</span><a>${b.deckNote}</a><span class="pl warn">Em produção</span></div>` : '');
-  const main = b.deck || (b.extra && b.extra[0][1]);
-  return `<article class="bc">
-    <div class="bh"><span class="lg" style="--c:${b.c}"><img src="assets/logos/${b.k}.svg" alt=""><i></i></span><div><b>${b.name}</b><small>${b.chars}</small></div><a class="go" href="${url(main || b.app)}" target="_blank" rel="noopener" aria-label="Abrir"><svg class="i"><use href="#i-arrow"/></svg></a></div>
-    <div class="meta"><div><p>Publicado</p><b>${dt(b.em)}</b></div><div><p>Idioma</p><b>${b.lang || 'PT-BR'}</b></div><div><p>Situação</p><b data-st="${b.k}">${statusOf(b)}</b></div></div>
-    <div class="links">${rows}</div>
-    <div class="acts"><a class="btn pri ${main ? '' : 'dis'}" href="${main ? url(main) : '#'}" target="_blank" rel="noopener">${b.deck ? 'Apresentação' : main ? b.extra[0][0] : 'Apresentação'}</a><a class="btn" href="${url(b.app)}" target="_blank" rel="noopener">App</a></div>
-  </article>`;
-}
-function statusOf(b) {
-  const ps = links(b).map(l => l[1]);
-  if (ps.some(p => live[p] === 'bad')) return '<span class="pl bad">Link fora</span>';
-  if (ps.every(p => live[p] === 'ok')) return '<span class="pl ok">No ar</span>';
-  return location.hostname === 'robertaestrela.github.io' ? '<span class="pl idle">Conferindo</span>' : '<span class="pl info">Publicado</span>';
-}
-function cell(p, label) {
-  return p ? `<div class="cell"><a href="${url(p)}" target="_blank" rel="noopener">${short(p)}</a><button class="ib" data-copy="${url(p)}" aria-label="Copiar link de ${label}"><svg class="i"><use href="#i-copy"/></svg></button></div>` : '<div class="cell"><span class="none">—</span></div>';
-}
+const btn = (label, p, pri) => p
+  ? `<a class="btn${pri ? ' pri' : ''}" href="${url(p)}" target="_blank" rel="noopener">${label}</a><button class="cp" data-copy="${url(p)}" aria-label="Copiar link: ${label}"><svg class="i"><use href="#i-copy"/></svg></button>`
+  : `<span class="btn off">${label}</span>`;
 function render() {
-  const list = BRANDS.filter(b => inGroup(b) && matches(b) && (state.t !== 'deck' || b.deck || b.extra || b.deckNote));
-  $('#count').textContent = `${list.length} de ${BRANDS.length} marcas`;
+  const list = BRANDS.filter(b => (state.f === 'all' || b.g === state.f) && (!state.q || norm(b.name).includes(state.q)));
   $('#empty').classList.toggle('hide', list.length > 0);
-  $('#grid').classList.toggle('hide', state.v !== 'cards' || !list.length);
-  $('#tbl').classList.toggle('hide', state.v !== 'lista' || !list.length);
-  $('#grid').classList.toggle('force', true);
-  $('#grid').innerHTML = list.map(card).join('');
-  $('#tbl').innerHTML = '<div class="tr th"><span>Marca</span><span>Personagens</span><span>Apresentação</span><span>App</span><span>Publicado</span><span>Situação</span></div>'
-    + list.map(b => `<div class="tr"><div class="who"><span class="lg" style="--c:${b.c}"><img src="assets/logos/${b.k}.svg" alt=""><i></i></span><div><b>${b.name}</b><small>${b.lang ? 'Em inglês' : b.g === 'casa' ? 'Casa' : 'White label'}</small></div></div>
-      <span class="chars">${b.chars}</span>${b.deck ? cell(b.deck, 'apresentação') : b.extra ? cell(b.extra[0][1], b.extra[0][0]) : '<div class="cell"><span class="pl warn">Em produção</span></div>'}${cell(b.app, 'app')}<span class="when">${dt(b.em)}</span><span data-st="${b.k}">${statusOf(b)}</span></div>`).join('');
+  $('#grid').innerHTML = list.map(b => `<article class="bc">
+    <div class="bh"><span class="lg"><img src="assets/logos/${b.k}.svg" alt="">${bad.has(b.k) ? '<i title="Algum link não respondeu"></i>' : ''}</span><b>${b.name}</b>${b.tag ? `<span class="tag">${b.tag}</span>` : ''}</div>
+    <div class="acts">${btn(b.deckLabel || 'Apresentação', b.deck, true)}${btn('App', b.app)}</div>
+    ${b.more ? `<div class="acts">${btn(b.more[0], b.more[1])}</div>` : ''}
+  </article>`).join('');
 }
 
-$$('#filters [data-f]').forEach(n => n.addEventListener('click', () => { $$('#filters [data-f]').forEach(x => x.classList.toggle('on', x === n)); state.f = n.dataset.f; render(); closeMenu(); }));
-$$('.chipf').forEach(n => n.addEventListener('click', () => { $$('.chipf').forEach(x => x.classList.toggle('on', x === n)); state.t = n.dataset.t; render(); }));
-$$('#viewSeg button').forEach(n => n.addEventListener('click', () => {
-  $$('#viewSeg button').forEach(x => { x.classList.toggle('on', x === n); x.setAttribute('aria-selected', x === n); });
-  state.v = n.dataset.v; try { localStorage.setItem('hub-view', state.v); } catch (e) {}
-  render();
-}));
-try { const v = localStorage.getItem('hub-view'); if (v) $(`#viewSeg [data-v="${v}"]`).click(); } catch (e) {}
+$$('#filters [data-f]').forEach(n => n.addEventListener('click', () => { $$('#filters [data-f]').forEach(x => x.classList.toggle('on', x === n)); state.f = n.dataset.f; render(); }));
 const q = $('#q');
-q.addEventListener('input', () => { state.q = q.value.trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); render(); });
-addEventListener('keydown', e => { if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); openMenu(); q.focus(); q.select(); } if (e.key === 'Escape' && document.activeElement === q) { q.value = ''; q.dispatchEvent(new Event('input')); q.blur(); } });
+q.addEventListener('input', () => { state.q = norm(q.value.trim()); render(); });
+addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); q.focus(); q.select(); }
+  if (e.key === 'Escape' && document.activeElement === q) { q.value = ''; q.dispatchEvent(new Event('input')); q.blur(); }
+});
 
-/* ===== Copiar link ===== */
 let tt;
 document.addEventListener('click', async e => {
   const b = e.target.closest('[data-copy]'); if (!b) return;
@@ -388,28 +196,11 @@ document.addEventListener('click', async e => {
   const toast = $('#toast'); toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('show'), 1600);
 });
 
-/* ===== Menu no celular ===== */
-const side = $('#side'), scrim = $('#scrim');
-function openMenu() { if (matchMedia('(max-width:900px)').matches) { side.classList.add('open'); scrim.classList.add('show'); } }
-function closeMenu() { side.classList.remove('open'); scrim.classList.remove('show'); }
-$('#menuBtn').addEventListener('click', openMenu); scrim.addEventListener('click', closeMenu);
-
-/* ===== Conferir os links ao vivo (só funciona publicado no mesmo endereço) ===== */
 render();
+// publicado no mesmo endereço, confere os links em silêncio: só a marca com link fora do ar ganha o pontinho vermelho
 if (location.hostname === 'robertaestrela.github.io') {
-  const paths = [...new Set(BRANDS.flatMap(b => links(b).map(l => l[1])))];
-  let done = 0;
-  const upd = () => {
-    const ok = paths.filter(p => live[p] === 'ok').length, bad = paths.filter(p => live[p] === 'bad').length;
-    $('#s-live').textContent = `${ok} de ${paths.length}`;
-    $('#s-dot').className = 'dot ' + (bad ? 'bad' : done === paths.length ? 'ok' : '');
-    $('#s-live-sub').textContent = bad ? `${bad} sem resposta` : done === paths.length ? 'todos respondendo' : 'conferindo…';
-    $$('[data-st]').forEach(el => { el.innerHTML = statusOf(BRANDS.find(b => b.k === el.dataset.st)); });
-  };
-  upd();
-  paths.forEach(p => fetch('/' + p + '/', {method: 'HEAD', cache: 'no-store'}).then(r => { live[p] = r.ok ? 'ok' : 'bad'; }).catch(() => { live[p] = 'bad'; }).finally(() => { done++; upd(); }));
-} else {
-  $('#s-live').textContent = '—'; $('#s-live-sub').textContent = 'confere quando estiver publicado';
+  BRANDS.forEach(b => [b.deck, b.app, b.more && b.more[1]].filter(Boolean).forEach(p =>
+    fetch('/' + p + '/', {method: 'HEAD', cache: 'no-store'}).then(r => { if (!r.ok) throw 0; }).catch(() => { bad.add(b.k); render(); })));
 }
 </script>
 </body>
