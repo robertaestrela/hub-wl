@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<title>Sirius · Hub white label</title>
+<title>Sirius Games Hub</title>
 <link rel="icon" href="assets/logos/sirius.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,8 +34,8 @@ svg.i{width:16px;height:16px;flex:none}
 .logo{display:flex;align-items:center;gap:12px;padding:0 8px 24px}
 .logo .sq{display:grid;place-items:center;width:32px;height:32px;border-radius:9px;background:#fff}
 .logo .sq img{width:18px;height:auto}
-.logo b{font:600 18px/24px var(--f);letter-spacing:-.03em}
-.logo b i{display:inline-block;width:5px;height:5px;margin:0 6px 3px;border-radius:50%;background:var(--accent);vertical-align:middle}
+.logo b{font:600 17px/24px var(--f);letter-spacing:-.03em;white-space:nowrap}
+.logo b span{font-weight:400;color:var(--muted)}
 .search{display:flex;align-items:center;gap:8px;height:36px;margin-bottom:16px;padding:0 8px 0 12px;border-radius:8px;background:var(--card);color:var(--subtle);box-shadow:inset 0 0 0 1px var(--line-2)}
 .search input{flex:1;min-width:0;outline:none;color:var(--text)}
 .search input::placeholder{color:var(--subtle)}
@@ -53,9 +53,19 @@ kbd{display:inline-grid;place-items:center;height:20px;padding:0 6px;border-radi
 .date{font:400 13px/18px var(--f);color:var(--muted)}
 h1{margin-top:4px;font:600 32px/40px var(--f);letter-spacing:-.03em}
 .subt{margin-top:4px;font:400 15px/20px var(--f);color:var(--muted)}
+.h2{margin:32px 0 12px;font:600 15px/20px var(--f);color:var(--muted)}
+.hl{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.hc{display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;background:var(--panel);box-shadow:inset 0 0 0 1px var(--line);transition:background .2s,box-shadow .2s}
+a.hc:hover{background:var(--card);box-shadow:inset 0 0 0 1px #ffffff24}
+.hc .lg{width:32px;height:32px;border-radius:8px}
+.hc .lg img{width:18px;height:18px}
+.hc div{flex:1;min-width:0}
+.hc b{display:block;font:500 14px/20px var(--f);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hc small{display:block;font:400 12px/16px var(--f);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hc em{flex:none;font:400 12px/16px var(--f);font-style:normal;color:var(--subtle)}
 
 /* ===== Uma marca por card: logo, nome e os dois links ===== */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(264px,1fr));gap:12px;margin-top:32px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(264px,1fr));gap:12px}
 .bc{display:flex;flex-direction:column;gap:16px;padding:16px;border-radius:16px;background:var(--panel);box-shadow:inset 0 0 0 1px var(--line);transition:box-shadow .25s,transform .35s var(--ease)}
 .bc:hover{box-shadow:inset 0 0 0 1px #ffffff2e;transform:translateY(-2px)}
 .bh{display:flex;align-items:center;gap:12px}
@@ -90,8 +100,10 @@ h1{margin-top:4px;font:600 32px/40px var(--f);letter-spacing:-.03em}
   .side-f{display:none}
   .main{padding:24px 16px 48px}
   h1{font-size:28px;line-height:36px}
-  .grid{grid-template-columns:1fr;margin-top:24px}
+  .grid{grid-template-columns:1fr}
 }
+@media (max-width:1280px){ .hl{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:560px){ .hl{grid-template-columns:1fr} }
 @media (prefers-reduced-motion:reduce){ *{transition:none !important} }
 </style>
 </head>
@@ -107,7 +119,7 @@ h1{margin-top:4px;font:600 32px/40px var(--f);letter-spacing:-.03em}
 <div class="app">
   <aside class="side">
     <div class="side-in">
-      <a class="logo" href="#" aria-label="Sirius Hub white label"><span class="sq"><img src="assets/logos/sirius.svg" alt=""></span><b>sirius<i></i>hub</b></a>
+      <a class="logo" href="#" aria-label="Sirius Games Hub"><span class="sq"><img src="assets/logos/sirius.svg" alt=""></span><b>Sirius Games <span>Hub</span></b></a>
       <label class="search"><svg class="i"><use href="#i-search"/></svg><input id="q" type="search" placeholder="Buscar marca" autocomplete="off" aria-label="Buscar marca"><kbd id="kbd">⌘K</kbd></label>
       <nav class="filters" id="filters" aria-label="Filtro">
         <button class="ni on" data-f="all"><span>Todas</span><em data-c="all"></em></button>
@@ -122,6 +134,9 @@ h1{margin-top:4px;font:600 32px/40px var(--f);letter-spacing:-.03em}
     <p class="date" id="date"></p>
     <h1 id="hello">Olá</h1>
     <p class="subt" id="subt"></p>
+    <h2 class="h2">Destaques</h2>
+    <div class="hl" id="hl"></div>
+    <h2 class="h2">Marcas</h2>
     <div class="grid" id="grid"></div>
     <div class="empty hide" id="empty">Nenhuma marca com esse nome.</div>
   </main>
@@ -154,6 +169,14 @@ const BRANDS = [
   {k: 'estrelagames', name: 'EstrelaGames', deck: 'vip', deckLabel: 'Convite VIP', app: 'truco-mineiro-estrelagames', g: 'casa', more: ['Afiliados', 'afiliados']},
 ];
 
+/* ===== Destaques do topo: o que mudou por último (troque aqui; link = caminho em robertaestrela.github.io, ou null) ===== */
+const HIGHLIGHTS = [
+  {k: 'bateu', t: 'Bateu Games no ar', s: 'Apresentação e app', d: '30 out', link: 'bateu'},
+  {k: 'brgames', t: '5 marcas novas', s: 'BR, VIP, Esportes da Sorte, Sorte nos Games e Esportiva', d: '30 out', link: 'brgames'},
+  {k: 'sirius', t: 'Nova logo Sirius Games', s: 'Em todas as apresentações', d: '30 out', link: 'kingpanda'},
+  {k: 'sirius', t: 'Apresentação da Sirius Games', s: 'Base institucional em produção', d: 'Em breve', link: null},
+];
+
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const url = p => BASE + p + '/';
 const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
@@ -166,6 +189,7 @@ const d = new Date().toLocaleDateString('pt-BR', {weekday: 'long', day: 'numeric
 $('#date').textContent = d.charAt(0).toUpperCase() + d.slice(1);
 $('#subt').textContent = 'Apresentações e apps das white labels da Sirius Games';
 if (!/Mac|iPhone|iPad/.test(navigator.platform)) $('#kbd').textContent = 'Ctrl K';
+$('#hl').innerHTML = HIGHLIGHTS.map(x => `<${x.link ? `a href="${url(x.link)}" target="_blank" rel="noopener"` : 'div'} class="hc"><span class="lg"><img src="assets/logos/${x.k}.svg" alt=""></span><div><b>${x.t}</b><small>${x.s}</small></div><em>${x.d}</em></${x.link ? 'a' : 'div'}>`).join('');
 $$('[data-c]').forEach(e => { e.textContent = BRANDS.filter(b => e.dataset.c === 'all' || b.g === e.dataset.c).length; });
 
 const btn = (label, p, pri) => p
